@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Celular,LojaDeCelular,Funcionario,Cliente,Pedido,ItemPedido,DetalhesCelular,Manutencao,Fornecedor
+from .models import Celular,LojaDeCelular,Funcionario,Cliente,Pessoa,Pedido,ItemPedido,DetalhesCelular,Manutencao,Fornecedor
 
 admin.site.register(Celular)
 admin.site.register(LojaDeCelular)
 admin.site.register(Funcionario)
 admin.site.register(Cliente)
+admin.site.register(Pessoa)
 admin.site.register(Pedido)
 admin.site.register(ItemPedido)
 admin.site.register(DetalhesCelular)
@@ -28,6 +29,11 @@ class FuncionarioAdmin(admin.ModelAdmin):
     list_display = ('matricula', 'nome', 'cargo', 'telefone')
     list_filter = ('cargo',)  
     search_fields = ('matricula', 'nome', 'cargo')  
+
+class PessoaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'telefone', 'email', 'endereço', 'cpf')
+    list_filter = ('nome', 'email') 
+    search_fields = ('nome', 'cpf') 
 
 class ClienteAdmin(admin.ModelAdmin):
     list_display = ('nome', 'telefone', 'email', 'endereço', 'cpf')
