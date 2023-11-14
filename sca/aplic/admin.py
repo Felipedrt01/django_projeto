@@ -1,24 +1,22 @@
 from django.contrib import admin
-from .models import Celular,LojaDeCelular,Funcionario,Cliente,Pessoa,Pedido,ItemPedido,DetalhesCelular,Manutencao,Fornecedor
+from .models import Celular,LojaDeCelular,Funcionario,Cliente,Pedido,ItemPedido,Manutencao,Fornecedor
 
 admin.site.register(Celular)
 admin.site.register(LojaDeCelular)
 admin.site.register(Funcionario)
 admin.site.register(Cliente)
-admin.site.register(Pessoa)
 admin.site.register(Pedido)
 admin.site.register(ItemPedido)
-admin.site.register(DetalhesCelular)
 admin.site.register(Manutencao)
 admin.site.register(Fornecedor)
 
 
-
 class CelularAdmin(admin.ModelAdmin):
-    list_display = ('modelo', 'preço', 'detalhes_celular', 'registrar_celular', 'registrar_manutenção', 'lista_de_manutenções_pendentes', 'pedidos')
-    list_filter = ('modelo', 'preço')  
-    search_fields = ('modelo', 'detalhes_celular', 'pedidos')  
-
+    list_display = ('modelo', 'preço', 'fabricante', 'sistema_operacional', 'memoria_ram', 'armazenamento_interno', 'registrar_celular', 'imagens')
+    search_fields = ('modelo', 'fabricante', 'sistema_operacional')
+    list_filter = ('fabricante', 'sistema_operacional')
+    date_hierarchy = 'registrar_celular'
+    filter_horizontal = ('registrar_manutencao', 'lista_de_manutencoes_pendentes', 'pedidos')
 
 class LojaDeCelularAdmin(admin.ModelAdmin):
     list_display = ('nome', 'endereço', 'cnpj', 'telefone')
@@ -29,11 +27,6 @@ class FuncionarioAdmin(admin.ModelAdmin):
     list_display = ('matricula', 'nome', 'cargo', 'telefone')
     list_filter = ('cargo',)  
     search_fields = ('matricula', 'nome', 'cargo')  
-
-class PessoaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'telefone', 'email', 'endereço', 'cpf')
-    list_filter = ('nome', 'email') 
-    search_fields = ('nome', 'cpf') 
 
 class ClienteAdmin(admin.ModelAdmin):
     list_display = ('nome', 'telefone', 'email', 'endereço', 'cpf')
@@ -49,11 +42,6 @@ class ItemPedidoAdmin(admin.ModelAdmin):
     list_display = ('quantidade', 'modelo', 'marca',)
     list_filter = ('marca',)  
     search_fields = ('modelo',) 
-
-class DetalhesCelularAdmin(admin.ModelAdmin):
-    list_display = ('fabricante', 'sistema_operacional', 'memoria_ram', 'armazenamento_interno')
-    list_filter = ('fabricante', 'sistema_operacional') 
-    search_fields = ('fabricante', 'sistema_operacional')
 
 class ManutencaoAdmin(admin.ModelAdmin):
     list_display = ('data', 'descricao')

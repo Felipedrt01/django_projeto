@@ -1,25 +1,5 @@
 from django.db import models
 
-
-class DetalhesCelular(models.Model):
-    fabricante = models.CharField(max_length=100)
-    sistema_operacional = models.CharField(max_length=100)
-    memoria_ram = models.PositiveIntegerField()
-    armazenamento_interno = models.PositiveIntegerField()
-
-    def __str__(self):
-        return self.fabricante
-
-class Pessoa(models.Model):
-    nome = models.CharField(max_length=150)
-    telefone = models.CharField(max_length=20)
-    email = models.EmailField()
-    endereço = models.CharField(max_length=200)
-    cpf = models.CharField(max_length=14)
-
-    def __str__(self):
-        return self.nome
-
 class Cliente(models.Model):
     nome = models.CharField(max_length=100)
     telefone = models.CharField(max_length=15)
@@ -65,11 +45,15 @@ class Fornecedor(models.Model):
 class Celular(models.Model):
     modelo = models.CharField(max_length=100)
     preço = models.DecimalField(max_digits=10, decimal_places=2)
-    detalhes_celular = models.ForeignKey(DetalhesCelular, on_delete=models.CASCADE)
+    fabricante = models.CharField(max_length=100)
+    sistema_operacional = models.CharField(max_length=100)
+    memoria_ram = models.PositiveIntegerField()
+    armazenamento_interno = models.PositiveIntegerField()
     registrar_celular = models.DateField(auto_now_add=True)
     registrar_manutencao = models.ManyToManyField(Manutencao, blank=True)
     lista_de_manutencoes_pendentes = models.ManyToManyField(Manutencao, blank=True, related_name='manutencoes_pendentes')
     pedidos = models.ManyToManyField(Pedido, blank=True)
+    imagem = models.ImageField(upload_to='imagens/')
 
     def __str__(self):
         return self.modelo
